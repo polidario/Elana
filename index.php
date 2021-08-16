@@ -23,6 +23,14 @@ include_once("includes/check_token.php");
 
 /**
  * ===================================================
+ *          CREATE A BILLING CHARGE
+ * ===================================================
+ */
+
+include_once("billing/oneTimeBilling.php");
+
+/**
+ * ===================================================
  *       HERE DISPLAY ANYTHING ABOUT THE STORE
  * ===================================================
  */
