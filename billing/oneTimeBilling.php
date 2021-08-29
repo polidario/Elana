@@ -1,11 +1,19 @@
 <?php
 
-if(isset($_GET['charge_id'])) {
+$query = "SELECT * FROM billings WHERE shop_url='" . $shopify->get_url() . "' LIMIT 1";
+$result = $mysql->query($query);
+
+$billing_data = $result->fetch_assoc();
+
+if(isset($_GET['charge_id']) || $billing_data['id']) {
+    $cid = isset($_GET['charge_id']) ? $_GET['charge_id'] : $billing_data['charge_id'];
+
     $query = array(
         "query" => '{
-            node(id: "gid://shopify/AppPurchaseOneTime/' . $_GET['charge_id'] . '") {
+            node(id: "gid://shopify/AppPurchaseOneTime/' . $cid . '") {
                 ... on AppPurchaseOneTime {
                     status
+                    id
                 }
             }
         }'
@@ -23,6 +31,18 @@ if(isset($_GET['charge_id'])) {
         echo "Woah! Looks like you're trying to create your own charge ID. You cannot do that.";
         die;
     }
+
+    $shop_url = $shopify->get_url();
+    $charge_id = $check_charge['data']['node']['id'];
+    $charge_id = explode("/", $charge_id);
+    $charge_id = $charge_id[array_key_last($charge_id)];
+
+    $gid = $check_charge['data']['node']['id'];
+
+    $status = $check_charge['data']['node']['status'];
+
+    $query = "INSERT INTO billings (shop_url, charge_id, gid, status) VALUES ('" . $shop_url . "','" . $charge_id . "','" . $gid . "','" . $status . "') ON DUPLICATE KEY UPDATE status='" . $status . "'";
+    $mysql->query($query);
 } else {
     $query = array("query" => 'mutation {
         appPurchaseOneTimeCreate(
