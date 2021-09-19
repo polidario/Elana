@@ -30,10 +30,11 @@ Status | Lectures
 :heavy_check_mark: | GraphQL Functions
 :heavy_check_mark: | Shopify App Bridge
 :heavy_check_mark: | Using Session Tokens
+:heavy_check_mark: | Billing API (One Time, Recurring, & Credits)
 :hourglass: | More lessons coming
 
 __I have a question, where can I contact you?__
 
 If you have any questions, PLEASE do ask in the course's QnA section. That's the only place where I will respond to questions. That means, if you are not enrolled to the course, you will not be receiving any support.
 
-This project file is produced and brought to you by WeeklyHow.
+This project file is produced by Bernard Polidario
