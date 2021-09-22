@@ -38,6 +38,21 @@ include_once("billing/oneTimeBilling.php");
 // $access_scopes = $shopify->rest_api('/admin/oauth/access_scopes.json', array(), 'GET');
 // $response = json_decode($access_scopes['body'], true);
 
+$webhook_data = json_decode('
+    {
+        "webhook": {
+            "topic": "products/create",
+            "address": "https://dd93-45-91-22-40.ngrok.io/elana/webhook_example.php",
+            "format": "json"
+        }
+    }
+', TRUE);
+
+$webhook = $shopify->rest_api('/admin/api/2021-07/webhooks.json', $webhook_data, 'POST');
+$response = json_decode($webhook['body'], TRUE);
+
+echo print_r($response);
+
 ?>
 
 <?php include_once("header.php"); ?>
