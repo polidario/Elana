@@ -1,0 +1,1 @@
+Is the webhook of the store verified? Status: 1
